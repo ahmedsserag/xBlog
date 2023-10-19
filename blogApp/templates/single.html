@@ -7,10 +7,10 @@
                     <div class="row px-4">
                         <div class="col-12">
                             <img class="img-fluid mb-4" src="{% static "img/detail.jpg" %}" alt="Image">
-                            <h2 class="mb-3 font-weight-bold">Nonumy ipsum takimata et sanct</h2>
+                            <h2 class="mb-3 font-weight-bold">{{ post.title }}</h2>
                             <div class="d-flex">
-                                <p class="mr-3 text-muted"><i class="fa fa-calendar-alt"></i> 01-Jan-2045</p>
-                                <p class="mr-3 text-muted"><i class="fa fa-folder"></i> Web Design</p>
+                                <p class="mr-3 text-muted"><i class="fa fa-calendar-alt"></i> {{ post.publish|date:"M d, Y" }} - {{ post.publish|time:"h:i A" }}</p>
+                                <p class="mr-3 text-muted"><i class="fa fa-user"></i> {{ post.author }}</p>
                                 <p class="mr-3 text-muted"><i class="fa fa-comments"></i> 15 Comments</p>
                             </div>
                             <p>Clita duo sadipscing amet ea ut kasd amet dolore, sed erat at dolore vero tempor et sit amet, amet amet elitr et consetetur ea duo. Gubergren tempor rebum clita at sit diam. Ea sadipscing voluptua et sit diam diam sed, gubergren magna ipsum lorem clita dolores nonumy dolor. Gubergren duo invidunt elitr amet labore dolores justo sanctus nonumy. Accusam diam tempor at ea clita dolores dolor et ipsum, dolor voluptua consetetur gubergren sit, no consetetur kasd vero invidunt clita dolore elitr eos, accusam amet et labore sed sadipscing accusam labore dolores. Eirmod no lorem sed dolor nonumy consetetur tempor sed.</p>
