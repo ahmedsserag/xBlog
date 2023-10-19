@@ -6,14 +6,13 @@
                     {% for post in posts %}
                     <div class="row blog-item px-3 pb-5">
                         <div class="col-md-5">
-                            <img class="img-fluid mb-4 mb-md-0" src="{% static "img/blog-1.jpg" %}" alt="Image">
+                            <img class="img-fluid mb-4 mb-md-0" src="{% static "img/blog.jpg" %}" alt="Image">
                         </div>
                         <div class="col-md-7">
                             <h3 class="mt-md-4 px-md-3 mb-2 py-2 bg-white font-weight-bold">{{ post.title }}</h3>
                             <div class="d-flex mb-3">
                                 <small class="mr-2 text-muted"><i class="fa fa-calendar-alt"></i> {{ post.publish|date:"M d, Y" }}</small>
                                 <small class="mr-2 text-muted"><i class="fa fa-user"></i> {{ post.author }}</small>
-                                <small class="mr-2 text-muted"><i class="fa fa-comments"></i> 15 Comments</small>
                             </div>
                             <p>{{ post.body|truncatewords:50|linebreaks }}</p>
                             <a class="btn btn-link p-0" href="{% url "blog:single-post" post.slug %}">Read More <i class="fa fa-angle-right"></i></a>
