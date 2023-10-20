@@ -20,5 +20,5 @@ from blogApp import views
 app_name = 'blog'
 urlpatterns = [
     path('', views.home, name='home'),
-    path('blog/<str:slug>/', views.single, name='single-post'),
+    path('blog/<int:year>/<int:month>/<str:slug>/', views.single, name='single-post'),
 ]

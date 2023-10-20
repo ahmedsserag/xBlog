@@ -6,8 +6,8 @@ from django.urls import reverse
 # Create your models here.
 class Post(models.Model):
     id = models.AutoField(primary_key=True)
-    slug = models.SlugField(max_length=100)
     title = models.CharField(max_length=100, help_text="Max lenght is 100.")
+    slug = models.SlugField(max_length=100, unique_for_date='publish')
     #cover = models.ImageField(default='', upload_to=user_directory_path, blank=True)
     body = models.TextField(max_length=1250, verbose_name="Content")
     TYPE = (
@@ -18,7 +18,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     publish = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now=True) # Every time the object is saved, such as last modified.
-    created = models.DateTimeField(auto_now_add=True, editable=True) # Automatically set the field to now when the object is first created.
+    created = models.DateTimeField(auto_now_add=True) # Automatically set the field to now when the object is first created.
 
     class Meta:
         ordering = ['-publish'] # Sort posts based on newest date of publish
@@ -35,5 +35,5 @@ class Post(models.Model):
     
     # Canonical URLs for enhanced SEO
     def get_absolute_url(self):
-        return reverse("blog:single-post",args=[self.slug])
+        return reverse("blog:single-post", args=[self.publish.year, self.publish.month, self.slug])
     

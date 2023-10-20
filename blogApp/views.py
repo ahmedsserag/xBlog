@@ -8,9 +8,9 @@ def home(request):
     return render(request, 'home.html', {'posts': posts})
 
 # Single Post Views
-def single(request, slug):
+def single(request, year, month, slug):
     try:
-        post = Post.objects.get(slug=slug, status='Published')
+        post = Post.objects.get(slug=slug, publish__year=year, publish__month=month, status='Published')
     except Post.DoesNotExist:
         raise Http404("Post Not Found :/")
     
