@@ -5,8 +5,8 @@ from django.core.paginator import Paginator, EmptyPage
 
 # Home Views
 def home(request):
-    post_list = Post.objects.all()
-    paginator = Paginator(post_list, 2)
+    post_list = Post.objects.filter(status='Published')
+    paginator = Paginator(post_list, 5)
     page_number = request.GET.get("page", 1)
     try:
         posts = paginator.page(page_number)
