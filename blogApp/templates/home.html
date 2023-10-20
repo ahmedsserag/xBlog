@@ -20,6 +20,33 @@
                     </div>
                     {% endfor %}
                 </div>
+                {% if posts.has_other_pages %}
+                <div class="col-12 py-4">
+                    <div class="btn-group btn-group-lg w-100">
+                        {% if posts.has_previous %}
+                        <div class="col d-flex justify-content-start">
+                            <a href="?page={{ posts.previous_page_number }}">
+                                <button type="button" class="btn btn-outline-primary"><i class="fa fa-angle-left mr-2"></i> Previous</button>
+                            </a>
+                        </div>
+                        {% endif %}
+                        <ul class="pagination justify-content-center">
+                            {% for i in posts.paginator.page_range %}                                    
+                            <li class="page-item {% if i == posts.number %}active{% endif %}">
+                            <a class="page-link" href="?page={{i}}">{{i}} <span class="sr-only">{{i}}</span></a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% if posts.has_next %}
+                        <div class="col d-flex justify-content-end">
+                            <a href="?page={{ posts.next_page_number }}">
+                                <button type="button" class="btn btn-outline-primary">Next <i class="fa fa-angle-right ml-2"></i></button>
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>                
+                {% endif %}
                 <!-- Blog List End -->
                 
                 <!-- Footer Start -->

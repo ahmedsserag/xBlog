@@ -14,15 +14,21 @@
                             </div>
                             <p>{{ post.body }}</p>
                             <h3 class="mb-3 font-weight-bold">Image of today by xBlog</h3>
-                            <img class="w-50 float-left mr-4 mb-3" src="{% static "img/blog-1.jpg" %}" alt="Image">
+                            <img class="w-50 float-left mr-4 mb-3" src="{% static "img/blog.jpg" %}" alt="Image">
                             <p>Diam dolor est labore duo invidunt ipsum clita et. Gubergren at lorem invidunt sadipscing rebum sit amet ut ut, voluptua diam dolores at sadipscing stet. Clita dolor amet dolor ipsum vero ea ea eos. Invidunt sed diam dolores takimata dolor dolore dolore sit. Sit ipsum erat amet lorem et, magna sea at sed et eos. Accusam eirmod kasd lorem clita sanctus ut consetetur et. Et duo tempor sea kasd clita ipsum et. Takimata kasd diam justo est eos erat aliquyam et ut. Ea sed sadipscing no justo et eos labore, gubergren ipsum magna dolor lorem dolore, elitr aliquyam takimata sea kasd dolores diam, amet et est accusam labore eirmod vero et voluptua. Amet labore clita duo et no. Rebum voluptua magna eos magna, justo gubergren labore sit voluptua eos. Dolores et no stet magna et gubergren amet dolor sit, lorem dolore est vero et.</p>
                         </div>
+                        {% if posts.has_other_pages %}
                         <div class="col-12 py-4">
                             <div class="btn-group btn-group-lg w-100">
-                                <button type="button" class="btn btn-outline-primary"><i class="fa fa-angle-left mr-2"></i> Previous</button>
-                                <button type="button" class="btn btn-outline-primary">Next<i class="fa fa-angle-right ml-2"></i></button>
+                                {% if posts.has_previous %}
+                                <button type="button" class="btn btn-outline-primary"><a href="?page={{ posts.previous_page_number }}"><i class="fa fa-angle-left mr-2"></i> Previous</a></button>
+                                {% endif %}
+                                {% if posts.has_next %}
+                                <button type="button" class="btn btn-outline-primary"><a href="?page={{ posts.next_page_number }}">Next</a><i class="fa fa-angle-right ml-2"></i></button>
+                                {% endif %}
                             </div> 
                         </div>
+                        {% endif %}
                     </div>
                 </div>
                 <!-- Blog Detail End -->
