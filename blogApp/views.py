@@ -18,11 +18,3 @@ def single(request, slug):
         'post': post,
     }
     return render(request, 'single.html', context)
-
-# About Views
-def about(request):
-    return render(request, 'about.html')
-
-# Contact Us Views
-def contact(request):
-    return render(request, 'contact-us.html')
