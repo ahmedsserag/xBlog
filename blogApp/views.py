@@ -43,3 +43,15 @@ def single(request, year, month, slug):
         'sent': sent,
     }
     return render(request, 'single.html', context)
+
+def contact_us(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        subject = request.POST['subject']
+        message = f"Name: {name}: \nEmail: {email}\n Message: {request.POST['message']}"
+
+        send_mail(subject, message, settings.EMAIL_HOST_USER, ['support@xBlog.com'],)
+        print('Sent :)')
+
+    return render(request, 'contact-us.html', {})
