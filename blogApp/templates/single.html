@@ -29,6 +29,23 @@
                             </div> 
                         </div>
                         {% endif %}
+                        <div class="col-12">
+                            <h3 class="mb-4 font-weight-bold">Share to a friend</h3>
+                            {% if sent %}
+                            <div class="text-left py-4">
+                                <h3 class="font-weight-bold">E-mail sent successfully <i class="fa fa-check-circle" style="font-size:28px"></i></h3>
+                                <p>{{ post.title }} post was sent to {{ form.cleaned_data.email }}</p>
+                            </div>
+                            {% else %}
+                            <form method='POST'>
+                                {{ form.as_p }}
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="submit" value="Send e-Mail" class="btn btn-primary">
+                                </div>
+                            </form>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <!-- Blog Detail End -->
