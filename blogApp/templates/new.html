@@ -1,0 +1,37 @@
+{% extends "base.html" %} {% load static %}
+{% block title %}| New Post{% endblock title %}
+{% block content %}
+            <div class="content">
+                <!-- Contact Start -->
+                <div class="container bg-white pt-5">
+                    <div class="row px-3 pb-2">
+                        <div class="col-md-12 mb-3">
+                            <h4 class="font-weight-bold">Create New Post</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-12 pb-5">
+                        <div class="contact-form">
+                            {% if messages %}{% for message in messages %}
+                            <div class="py-4 alert alert-primary" role="alert" id="success">{{ message|title }}</div>
+                            {% endfor %}{% endif %}
+                            <form method="POST" name="createNew" id="newPost" novalidate="novalidate">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <div>
+                                    <button class="btn btn-primary" type="submit" id="createNewPostBtn">Create Post</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contact End -->
+
+                <!-- Footer Start -->
+                <div class="container py-4 bg-secondary text-center">
+                    <p class="m-0 text-white">
+                        &copy; <a class="text-white font-weight-bold" href="#">xBlog</a>. All Rights Reserved. Made by <a class="text-white font-weight-bold" href="https://github.com/ahmedsserag" target="_blank">Ahmed Serag</a>
+                    </p>
+                </div>
+                <!-- Footer End -->
+            </div>
+{% endblock content %}

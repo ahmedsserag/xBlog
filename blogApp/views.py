@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from .models import Post, User
-from .forms import EmailPostForm
+from .forms import EmailPostForm, NewPost
 from django.core.paginator import Paginator, EmptyPage
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib import messages
 
-# Home Views
+# Home View
 def home(request):
     post_list = Post.objects.filter(status='Published')
     paginator = Paginator(post_list, 5)
@@ -17,7 +18,7 @@ def home(request):
         posts = paginator.page(paginator.num_pages)
     return render(request, 'home.html', {'posts': posts})
 
-# Single Post Views
+# Single Post Detials View
 def single(request, year, month, slug):
     try:
         post = Post.objects.get(slug=slug, publish__year=year, publish__month=month, status='Published')
@@ -44,7 +45,22 @@ def single(request, year, month, slug):
     }
     return render(request, 'single.html', context)
 
+# Create New Post View
+def new(request):
+    if request.method == 'POST':
+        form = NewPost(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data.get('title')
+            form.save()
+            messages.success(request, f'{title} Post Saved Successfully')
+            form = NewPost()
+    else:
+        form = NewPost()
+    return render(request, 'new.html', {'form': form})
+
+# Contact Us View
 def contact_us(request):
+    sent = False
     if request.method == 'POST':
         name = request.POST['name']
         email = request.POST['email']
@@ -52,6 +68,7 @@ def contact_us(request):
         message = f"Name: {name}: \nEmail: {email}\n Message: {request.POST['message']}"
 
         send_mail(subject, message, settings.EMAIL_HOST_USER, ['support@xBlog.com'],)
+        sent = True
         print('Sent :)')
 
-    return render(request, 'contact-us.html', {})
+    return render(request, 'contact-us.html', {'sent': sent})

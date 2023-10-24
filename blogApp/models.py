@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 class Post(models.Model):
@@ -33,6 +34,15 @@ class Post(models.Model):
     def __str__(self) -> str:
         return str(self.title)
     
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)      
+          
+        i = 1
+        while Post.objects.filter(author=self.author, slug=self.slug).exclude(id=self.id).exists():
+            self.slug = f"{self.title}-{i}"
+            i += 1
+        super(Post, self).save(*args, **kwargs)
+
     # Canonical URLs for enhanced SEO
     def get_absolute_url(self):
         return reverse("blog:single-post", args=[self.publish.year, self.publish.month, self.slug])
