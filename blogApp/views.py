@@ -2,21 +2,27 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from .models import Post, User
 from .forms import EmailPostForm, NewPost
-from django.core.paginator import Paginator, EmptyPage
+from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
+from taggit.models import Tag
 
 # Home View
-def home(request):
-    post_list = Post.objects.filter(status='Published')
-    paginator = Paginator(post_list, 5)
+def home(request, tag_slug=None):
+    post_list = Post.objects.filter(status='Published', author=request.user)
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        post_list = post_list.filter(tags__in=[tag])
+
+    paginator = Paginator(post_list, 4)
     page_number = request.GET.get("page", 1)
     try:
         posts = paginator.page(page_number)
     except:
         posts = paginator.page(paginator.num_pages)
-    return render(request, 'home.html', {'posts': posts})
+    return render(request, 'home.html', {'posts': posts, 'tag':tag})
 
 # Single Post Detials View
 def single(request, year, month, slug):
@@ -51,7 +57,10 @@ def new(request):
         form = NewPost(request.POST)
         if form.is_valid():
             title = form.cleaned_data.get('title')
-            form.save()
+            post = form.save(commit=False)
+            post.author = request.user  # Set the author on the instance
+            post.save()
+
             messages.success(request, f'{title} Post Saved Successfully')
             form = NewPost()
     else:

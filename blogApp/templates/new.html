@@ -14,7 +14,7 @@
                             {% if messages %}{% for message in messages %}
                             <div class="py-4 alert alert-primary" role="alert" id="success">{{ message|title }}</div>
                             {% endfor %}{% endif %}
-                            <form method="POST" name="createNew" id="newPost" novalidate="novalidate">
+                            <form method="POST" name="createNew" id="newPost">
                                 {% csrf_token %}
                                 {{ form.as_p }}
                                 <div>

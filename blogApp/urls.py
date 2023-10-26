@@ -20,7 +20,8 @@ from blogApp import views
 app_name = 'blog'
 urlpatterns = [
     path('', views.home, name='home'),
-    path('blog/<int:year>/<int:month>/<str:slug>/', views.single, name='single-post'),
+    path('tag/<slug:tag_slug>', views.home, name='tag'),
+    path('blog/<int:year>/<int:month>/<slug:slug>/', views.single, name='single-post'),
     path('new/', views.new, name='new-post'),
     path('contact-us/', views.contact_us, name='contact-us'),
 ]

@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.template.defaultfilters import slugify
+from taggit.managers import TaggableManager
 
 # Create your models here.
 class Post(models.Model):
@@ -20,6 +21,7 @@ class Post(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now=True) # Every time the object is saved, such as last modified.
     created = models.DateTimeField(auto_now_add=True) # Automatically set the field to now when the object is first created.
+    tags = TaggableManager()
 
     class Meta:
         ordering = ['-publish'] # Sort posts based on newest date of publish
