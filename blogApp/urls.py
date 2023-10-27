@@ -16,6 +16,12 @@ Including another URLconf
 """
 from django.urls import path
 from blogApp import views
+from django.contrib.sitemaps.views import sitemap
+from blogApp.sitemaps import BlogSitemap
+
+sitemaps = {
+    "posts": BlogSitemap,
+}
 
 app_name = 'blog'
 urlpatterns = [
@@ -24,4 +30,5 @@ urlpatterns = [
     path('blog/<int:year>/<int:month>/<slug:slug>/', views.single, name='single-post'),
     path('new/', views.new, name='new-post'),
     path('contact-us/', views.contact_us, name='contact-us'),
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
 ]
